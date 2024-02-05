@@ -9,6 +9,7 @@ import java.util.UUID;
 @Entity
 @Table(name="id_proof")
 public class IdProof {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private UUID proofId;
