@@ -16,7 +16,7 @@ public class IdProof extends Audit implements Serializable {
     @Column(unique = true,nullable = false)
     private String proofName;
 
-    @OneToOne(mappedBy = "proof")
+    @OneToOne(mappedBy = "proof",cascade = CascadeType.ALL)
     private Person person;
 
     public IdProof(int id, UUID proofId, String proofName) {
