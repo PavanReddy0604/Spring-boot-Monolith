@@ -13,7 +13,7 @@ public class Project {
     private String projectDescription;
     private ProjectType projectType;
     @ManyToOne
-    @JoinColumn(name="person")
+    @JoinColumn(name="person_id")
     private Person person;
     public Project(){
 
