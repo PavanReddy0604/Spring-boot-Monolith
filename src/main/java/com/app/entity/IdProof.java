@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -13,16 +14,20 @@ public class IdProof extends Audit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private UUID proofId;
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String proofName;
 
-    @OneToOne(mappedBy = "proof",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "proof", cascade = CascadeType.ALL)
     private Person person;
 
-    public IdProof(int id, UUID proofId, String proofName) {
+    public IdProof(){}
+
+    public IdProof(LocalDateTime createdAt, LocalDateTime updatedAt, int id, UUID proofId, String proofName, Person person) {
+        super(createdAt, updatedAt);
         this.id = id;
         this.proofId = proofId;
         this.proofName = proofName;
+        this.person = person;
     }
 
     public int getId() {
@@ -47,5 +52,23 @@ public class IdProof extends Audit implements Serializable {
 
     public void setProofName(String proofName) {
         this.proofName = proofName;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    @Override
+    public String toString() {
+        return "IdProof{" +
+                "id=" + id +
+                ", proofId=" + proofId +
+                ", proofName='" + proofName + '\'' +
+                ", person=" + person +
+                '}';
     }
 }
