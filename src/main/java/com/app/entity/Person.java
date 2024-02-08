@@ -17,7 +17,7 @@ public class Person extends Audit implements Serializable {
     private String personName;
     private Gender gender;
 
-    private Long mobileNumber;
+    private long mobileNumber;
     @OneToOne
     @JoinColumn(name = "id_proof")
     private IdProof proof;
