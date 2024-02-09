@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IdProofRepository extends JpaRepository<IdProof,Integer> {
+
+    IdProof findByProofName(String name);
 }
