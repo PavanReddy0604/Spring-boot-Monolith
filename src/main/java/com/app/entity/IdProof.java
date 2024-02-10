@@ -13,8 +13,9 @@ public class IdProof extends Audit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(unique = true)
     private UUID proofId;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String proofName;
 
     @OneToOne(mappedBy = "proof", cascade = CascadeType.ALL,orphanRemoval = true)

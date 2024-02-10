@@ -4,9 +4,11 @@ import com.app.entity.Project;
 import com.app.util.Gender;
 
 import java.util.Set;
+import java.util.UUID;
 
 public class PersonDTO {
 
+    public UUID personId;
     public String personName;
     public Gender gender;
     public long mobileNumber;
@@ -14,6 +16,14 @@ public class PersonDTO {
 
     public String getPersonName() {
         return personName;
+    }
+
+    public UUID getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(UUID personId) {
+        this.personId = personId;
     }
 
     public void setPersonName(String personName) {
