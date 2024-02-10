@@ -1,6 +1,7 @@
 package com.app.entity;
 
 import com.app.util.Gender;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"personName","id_proof"}))
 public class Person extends Audit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +20,9 @@ public class Person extends Audit implements Serializable {
     private Gender gender;
 
     private long mobileNumber;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_proof")
+    @JsonBackReference
     private IdProof proof;
     @OneToMany(mappedBy = "person",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Project> project;

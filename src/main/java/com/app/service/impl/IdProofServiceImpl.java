@@ -2,12 +2,13 @@ package com.app.service.impl;
 
 import com.app.dao.IdProofRepository;
 import com.app.dto.IdProofDTO;
+import com.app.dto.PersonDTO;
 import com.app.entity.IdProof;
 import com.app.entity.Person;
 import com.app.exception.BaseExcepiton;
 import com.app.exception.IdProofNotFoundException;
+import com.app.exception.PersonNotFoundException;
 import com.app.service.IdProofService;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -25,22 +26,30 @@ public class IdProofServiceImpl implements IdProofService {
     private static final Logger log = LoggerFactory.getLogger(IdProofServiceImpl.class);
 
     @Override
-    public int saveIdProof(IdProofDTO idProofDTO) throws UnexpectedException, BaseExcepiton {
+    public int saveIdProof(IdProofDTO idProofDTO) throws UnexpectedException, BaseExcepiton, PersonNotFoundException {
         IdProof savedIdProof = null;
-        try{
-            log.info("Saving Id proof with name {} ",idProofDTO.getProofName());
-            UUID proofId= UUID.randomUUID();
-            IdProof idProof=new IdProof();
-            Person person=new Person();
-            person.setPersonId(UUID.randomUUID());
-            person.setPersonName(idProofDTO.getPerson().getPersonName());
-            person.setGender(idProofDTO.getPerson().getGender());
-            person.setMobileNumber(idProofDTO.getPerson().getMobileNumber());
-            idProof.setPerson(person);
-            idProof.setProofId(proofId);
-            idProof.setProofName(idProofDTO.getProofName());
-
-            savedIdProof =idProofRepository.save(idProof);
+        try {
+            log.info("Saving Id proof with name {} ", idProofDTO.getProofName());
+            if (idProofDTO.getPerson() != null) {
+                UUID proofId = UUID.randomUUID();
+                IdProof idProof = new IdProof();
+                Person person = new Person();
+                person.setPersonId(UUID.randomUUID());
+                person.setPersonName(idProofDTO.getPerson().getPersonName());
+                person.setGender(idProofDTO.getPerson().getGender());
+                person.setMobileNumber(idProofDTO.getPerson().getMobileNumber());
+                person.setProof(idProof);
+                idProof.setPerson(person);
+                idProof.setProofId(proofId);
+                idProof.setProofName(idProofDTO.getProofName());
+                savedIdProof = idProofRepository.save(idProof);
+            } else {
+                log.error("IdProof without person is invalid");
+                throw new PersonNotFoundException("Please provide person details. IdProof without person is Invalid");
+            }
+        }
+        catch (PersonNotFoundException e){
+            throw e;
         }
         catch (Exception exception){
             log.error("Exception occurred while saving IdProof with name {} ",idProofDTO.getProofName());
@@ -83,7 +92,15 @@ public class IdProofServiceImpl implements IdProofService {
             idProofDTOS=new HashSet<>();
             for(IdProof idProof:idProofList){
                 IdProofDTO idProofDTO=new IdProofDTO();
-                BeanUtils.copyProperties(idProof,idProofDTO);
+                idProofDTO.setProofId(idProof.getProofId());
+                idProofDTO.setProofName(idProof.getProofName());
+                PersonDTO personDTO=new PersonDTO();
+                personDTO.setPersonId(idProof.getPerson().getPersonId());
+                personDTO.setPersonName(idProof.getPerson().getPersonName());
+                personDTO.setGender(idProof.getPerson().getGender());
+                personDTO.setMobileNumber(idProof.getPerson().getMobileNumber());
+                personDTO.setProject(idProof.getPerson().getProject());
+                idProofDTO.setPerson(personDTO);
                 idProofDTOS.add(idProofDTO);
             }
         }
@@ -99,8 +116,46 @@ public class IdProofServiceImpl implements IdProofService {
     }
 
     @Override
-    public IdProofDTO updateIdProof(IdProofDTO idProofDTO) {
-        return null;
+    public int updateIdProof(IdProofDTO idProofDTO) throws PersonNotFoundException, BaseExcepiton, IdProofNotFoundException {
+        int updatedIdProofDTOId = 0;
+        try{
+            Optional<IdProof> savedIdProof=idProofRepository.findByProofId(idProofDTO.getProofId());
+            if(savedIdProof.isPresent()) {
+                if (idProofDTO.getPerson() != null) {
+                    IdProof idProof = new IdProof();
+                    Person person = new Person();
+                    idProof.setProofName(idProofDTO.getProofName());
+                    idProof.setProofId(idProofDTO.getProofId());
+                    person.setGender(idProofDTO.getPerson().getGender());
+                    person.setPersonName(idProofDTO.getPerson().getPersonName());
+                    person.setMobileNumber(idProofDTO.getPerson().getMobileNumber());
+                    person.setProof(idProof);
+                    person.setPersonId(idProofDTO.getProofId());
+                    person.setProject(idProofDTO.getPerson().getProject());
+                    idProof.setPerson(person);
+                    updatedIdProofDTOId = idProofRepository.save(idProof).getId();
+                } else {
+                    log.error("IdProof without person is invalid");
+                    throw new PersonNotFoundException("Please provide person details. IdProof without person is Invalid");
+                }
+            }
+            else {
+                log.error(" No IdProof found with proofId {} ",idProofDTO.getProofId());
+                throw new IdProofNotFoundException("No IdProof found with proofId "+idProofDTO.getProofId());
+            }
+        }
+        catch ( PersonNotFoundException personNotFoundException){
+            throw personNotFoundException;
+        }
+        catch (IdProofNotFoundException idProofNotFoundException){
+            throw idProofNotFoundException;
+        }
+        catch (Exception e){
+            log.error("Unable to update idProof");
+            throw new BaseExcepiton("Unable to update IdProof with name "+idProofDTO.getProofName());
+
+        }
+        return updatedIdProofDTOId;
     }
 
     @Override

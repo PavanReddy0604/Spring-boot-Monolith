@@ -2,9 +2,21 @@ package com.app.dto;
 
 import com.app.entity.Person;
 
+import java.util.UUID;
+
 public class IdProofDTO {
-    public String proofName;
-    public Person person;
+
+    private UUID proofId;
+    private String proofName;
+    private PersonDTO person;
+
+    public UUID getProofId() {
+        return proofId;
+    }
+
+    public void setProofId(UUID proofId) {
+        this.proofId = proofId;
+    }
 
     public String getProofName() {
         return proofName;
@@ -14,11 +26,11 @@ public class IdProofDTO {
         this.proofName = proofName;
     }
 
-    public Person getPerson() {
+    public PersonDTO getPerson() {
         return person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(PersonDTO person) {
         this.person = person;
     }
 }

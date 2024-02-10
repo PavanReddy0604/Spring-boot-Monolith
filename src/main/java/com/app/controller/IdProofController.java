@@ -3,6 +3,8 @@ package com.app.controller;
 import com.app.dto.IdProofDTO;
 import com.app.entity.IdProof;
 import com.app.exception.BaseExcepiton;
+import com.app.exception.IdProofNotFoundException;
+import com.app.exception.PersonNotFoundException;
 import com.app.service.IdProofService;
 import com.app.service.impl.IdProofServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -27,10 +29,18 @@ public class IdProofController {
         return new ResponseEntity<>(idProofDTOSet, HttpStatus.OK);
     }
     @PostMapping("/")
-    public ResponseEntity<Integer> saveIDProof(@RequestBody() IdProofDTO idProofDTO) throws UnexpectedException, BaseExcepiton {
+    public ResponseEntity<Integer> saveIDProof(@RequestBody() IdProofDTO idProofDTO) throws UnexpectedException, BaseExcepiton, PersonNotFoundException {
         int idProofId =idProofService.saveIdProof(idProofDTO);
         return new ResponseEntity<>(idProofId,HttpStatus.CREATED);
-
-
+    }
+    @PutMapping("/")
+    public ResponseEntity<Integer> updateIdProof(@RequestBody() IdProofDTO idProofDTO) throws PersonNotFoundException, BaseExcepiton, IdProofNotFoundException {
+        int idProofId=idProofService.updateIdProof(idProofDTO);
+        return new ResponseEntity<>(idProofId,HttpStatus.OK);
+    }
+    @GetMapping("/proofName/{name}")
+    public ResponseEntity<IdProofDTO> getIdProofByName(@PathVariable("name") String name) throws BaseExcepiton {
+        IdProofDTO idProofDTO= idProofService.getIdProofByName(name);
+        return new ResponseEntity<>(idProofDTO,HttpStatus.OK);
     }
 }
