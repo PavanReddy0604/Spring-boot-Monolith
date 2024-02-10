@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.rmi.UnexpectedException;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -39,8 +40,8 @@ public class IdProofController {
         return new ResponseEntity<>(idProofId,HttpStatus.OK);
     }
     @GetMapping("/proofName/{name}")
-    public ResponseEntity<IdProofDTO> getIdProofByName(@PathVariable("name") String name) throws BaseExcepiton {
-        IdProofDTO idProofDTO= idProofService.getIdProofByName(name);
+    public ResponseEntity<List<IdProofDTO>> getIdProofByName(@PathVariable("name") String name) throws BaseExcepiton {
+        List<IdProofDTO> idProofDTO= idProofService.getIdProofByName(name);
         return new ResponseEntity<>(idProofDTO,HttpStatus.OK);
     }
 }

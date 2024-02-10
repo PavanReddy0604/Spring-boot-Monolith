@@ -59,25 +59,37 @@ public class IdProofServiceImpl implements IdProofService {
     }
 
     @Override
-    public IdProofDTO getIdProofByName(String proofName) throws BaseExcepiton {
-        IdProofDTO idProofDTO=null;
+    public List<IdProofDTO> getIdProofByName(String proofName) throws BaseExcepiton {
+        List<IdProofDTO> idProofDTOList=new ArrayList<>();
         try {
             log.info("Fetching the IdProof with name {}",proofName);
-            IdProof idProof=idProofRepository.findByProofName(proofName);
-            if(Objects.nonNull(idProof)){
-                log.info("Fetched IdProof : {}",idProofDTO.toString());
-                idProofDTO=new IdProofDTO();
-                BeanUtils.copyProperties(idProof,idProofDTO);
+            List<IdProof> idProofList=idProofRepository.findByProofName(proofName);
+            if(!idProofList.isEmpty()){
+                for(IdProof idProof :idProofList){
+                    IdProofDTO idProofDTO=new IdProofDTO();
+                    idProofDTO.setProofId(idProof.getProofId());
+                    idProofDTO.setProofName(idProof.getProofName());
+                    PersonDTO personDTO=new PersonDTO();
+                    personDTO.setPersonId(idProof.getPerson().getPersonId());
+                    personDTO.setPersonName(idProof.getPerson().getPersonName());
+                    personDTO.setGender(idProof.getPerson().getGender());
+                    personDTO.setMobileNumber(idProof.getPerson().getMobileNumber());
+                    personDTO.setProject(idProof.getPerson().getProject());
+                    idProofDTO.setPerson(personDTO);
+                    idProofDTOList.add(idProofDTO);
+                    idProofDTOList.add(idProofDTO);
+                }
             }
+
             else {
                 log.error("Exception occurred while fetching IdProof with name {} ",proofName);
                 throw new IdProofNotFoundException("IdProof not found with name "+proofName);
             }
 
         } catch (IdProofNotFoundException e) {
-            throw new BaseExcepiton("Unable to get IdProof with Id "+proofName);
+            throw new BaseExcepiton("Unable to get IdProof with name "+proofName);
         }
-        return idProofDTO;
+        return idProofDTOList;
     }
 
     @Override
