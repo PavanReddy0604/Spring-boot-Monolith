@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.rmi.UnexpectedException;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/idProof")
@@ -43,5 +44,10 @@ public class IdProofController {
     public ResponseEntity<List<IdProofDTO>> getIdProofByName(@PathVariable("name") String name) throws BaseExcepiton {
         List<IdProofDTO> idProofDTO= idProofService.getIdProofByName(name);
         return new ResponseEntity<>(idProofDTO,HttpStatus.OK);
+    }
+    @DeleteMapping("/{proofId}")
+    public ResponseEntity<Void> deleteByProofId(@PathVariable("proofId")UUID proofId) throws IdProofNotFoundException, BaseExcepiton {
+        idProofService.deleteIdProofByProofId(proofId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
