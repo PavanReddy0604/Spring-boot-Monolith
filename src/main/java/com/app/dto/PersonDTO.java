@@ -1,5 +1,6 @@
 package com.app.dto;
 
+import com.app.entity.IdProof;
 import com.app.entity.Project;
 import com.app.util.Gender;
 
@@ -13,6 +14,7 @@ public class PersonDTO {
     public Gender gender;
     public long mobileNumber;
     public Set<Project> project;
+    private IdProof idProof;
 
     public String getPersonName() {
         return personName;
@@ -48,6 +50,14 @@ public class PersonDTO {
 
     public Set<Project> getProject() {
         return project;
+    }
+
+    public IdProof getIdProof() {
+        return idProof;
+    }
+
+    public void setIdProof(IdProof idProof) {
+        this.idProof = idProof;
     }
 
     public void setProject(Set<Project> project) {

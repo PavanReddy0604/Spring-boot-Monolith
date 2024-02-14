@@ -51,9 +51,13 @@ public class PersonServiceImpl implements PersonService {
             personDTO.setPersonId(UUID.randomUUID());
             log.info("Saving Person with name {} ",personDTO.getPersonName());
             Person person=new Person();
-            modelMapper.map(personDTO,person);
+            person.setPersonName(personDTO.getPersonName());
+            person.setPersonId(personDTO.getPersonId());
+            person.setMobileNumber(personDTO.getMobileNumber());
+            person.setProject(personDTO.getProject());
+            person.setGender(personDTO.getGender());
+            person.setProof(personDTO.getIdProof());
             savedPersonId=personRepository.save(person).getId();
-
         }
         catch (Exception e){
             log.error("Exception occurred while saving the Person Record \n Error: {}",e.getMessage());
