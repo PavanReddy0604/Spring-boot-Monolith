@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"personName","id_proof"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"personName","mobileNumber"}))
 public class Person extends Audit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
