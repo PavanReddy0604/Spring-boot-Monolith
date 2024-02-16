@@ -19,7 +19,7 @@ public class ProjectDTO {
     }
 
     private ProjectType projectType;
-    private Person person;
+    private PersonDTO person;
 
     public String getProjectDescription() {
         return projectDescription;
@@ -37,11 +37,11 @@ public class ProjectDTO {
         this.projectType = projectType;
     }
 
-    public Person getPerson() {
+    public PersonDTO getPerson() {
         return person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(PersonDTO person) {
         this.person = person;
     }
 }

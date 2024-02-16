@@ -1,6 +1,7 @@
 package com.app.entity;
 
 import com.app.util.ProjectType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +15,7 @@ public class Project {
     private ProjectType projectType;
     @ManyToOne
     @JoinColumn(name="person_id")
+    @JsonBackReference
     private Person person;
     public Project(){
 

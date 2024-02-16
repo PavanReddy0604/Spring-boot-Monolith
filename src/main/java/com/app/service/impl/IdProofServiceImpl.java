@@ -73,7 +73,7 @@ public class IdProofServiceImpl implements IdProofService {
                     personDTO.setPersonName(idProof.getPerson().getPersonName());
                     personDTO.setGender(idProof.getPerson().getGender());
                     personDTO.setMobileNumber(idProof.getPerson().getMobileNumber());
-                    personDTO.setProject(idProof.getPerson().getProject());
+                   // personDTO.setProject(idProof.getPerson().getProject());
                     idProofDTO.setPerson(personDTO);
                     idProofDTOList.add(idProofDTO);
                     idProofDTOList.add(idProofDTO);
@@ -108,7 +108,7 @@ public class IdProofServiceImpl implements IdProofService {
                 personDTO.setPersonName(idProof.getPerson().getPersonName());
                 personDTO.setGender(idProof.getPerson().getGender());
                 personDTO.setMobileNumber(idProof.getPerson().getMobileNumber());
-                personDTO.setProject(idProof.getPerson().getProject());
+               // personDTO.setProject(idProof.getPerson().getProject());
                 idProofDTO.setPerson(personDTO);
                 idProofDTOS.add(idProofDTO);
             }
@@ -138,7 +138,7 @@ public class IdProofServiceImpl implements IdProofService {
                     person.setMobileNumber(idProofDTO.getPerson().getMobileNumber());
                     person.setProof(idProof);
                     person.setPersonId(idProofDTO.getProofId());
-                    person.setProject(idProofDTO.getPerson().getProject());
+                  //  person.setProject(idProofDTO.getPerson().getProject());
                     idProof.setPerson(person);
                     updatedIdProofDTOId = idProofRepository.save(idProof).getId();
                 } else {

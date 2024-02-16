@@ -2,6 +2,7 @@ package com.app.service.impl;
 
 import com.app.dao.PersonRepository;
 import com.app.dao.ProjectRepository;
+import com.app.dto.PersonDTO;
 import com.app.dto.ProjectDTO;
 import com.app.entity.Person;
 import com.app.entity.Project;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -56,6 +59,31 @@ public class ProjectServiceImpl {
             throw new BaseExcepiton("Unable to save the project "+projectDTO.getProjectName());
         }
         return project.getId();
+    }
+
+    public List<ProjectDTO> getAllProjects() throws BaseExcepiton {
+        try {
+            List<Project> projects=projectRepository.findAll();
+            List<ProjectDTO> projectDTOS=new ArrayList<>();
+            for(Project project:projects){
+                ProjectDTO projectDTO=new ProjectDTO();
+                projectDTO.setProjectName(project.getProjectName());
+                projectDTO.setProjectDescription(project.getProjectDescription());
+                projectDTO.setProjectType(project.getProjectType());
+                PersonDTO personDTO=new PersonDTO();
+                personDTO.setPersonId(project.getPerson().getPersonId());
+                personDTO.setGender(project.getPerson().getGender());
+                personDTO.setPersonName(project.getPerson().getPersonName());
+                personDTO.setMobileNumber(project.getPerson().getMobileNumber());
+                projectDTO.setPerson(personDTO);
+                projectDTOS.add(projectDTO);
+            }
+            return projectDTOS;
+        }
+        catch (Exception exception){
+            log.error("Exception Occurred while fetching all projects ");
+            throw new BaseExcepiton("Unable to fetch projects");
+        }
     }
 
 

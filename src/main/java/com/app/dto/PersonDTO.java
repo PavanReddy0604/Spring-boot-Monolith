@@ -13,8 +13,7 @@ public class PersonDTO {
     public String personName;
     public Gender gender;
     public long mobileNumber;
-    public Set<Project> project;
-    private IdProof idProof;
+//    public Set<Project> project;
 
     public String getPersonName() {
         return personName;
@@ -48,19 +47,12 @@ public class PersonDTO {
         this.mobileNumber = mobileNumber;
     }
 
-    public Set<Project> getProject() {
-        return project;
-    }
-
-    public IdProof getIdProof() {
-        return idProof;
-    }
-
-    public void setIdProof(IdProof idProof) {
-        this.idProof = idProof;
-    }
-
-    public void setProject(Set<Project> project) {
-        this.project = project;
-    }
+//    public Set<Project> getProject() {
+//        return project;
+//    }
+//
+//
+//    public void setProject(Set<Project> project) {
+//        this.project = project;
+//    }
 }
