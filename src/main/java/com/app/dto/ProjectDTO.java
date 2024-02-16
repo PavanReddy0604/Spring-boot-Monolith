@@ -6,7 +6,17 @@ import com.app.util.ProjectType;
 import java.util.UUID;
 
 public class ProjectDTO {
+
+    private String projectName;
     private String projectDescription;
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
 
     private ProjectType projectType;
     private Person person;
