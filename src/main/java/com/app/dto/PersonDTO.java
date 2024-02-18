@@ -13,7 +13,7 @@ public class PersonDTO {
     public String personName;
     public Gender gender;
     public long mobileNumber;
-//    public Set<Project> project;
+    public Set<ProjectDTO> project;
 
     public String getPersonName() {
         return personName;
@@ -47,12 +47,12 @@ public class PersonDTO {
         this.mobileNumber = mobileNumber;
     }
 
-//    public Set<Project> getProject() {
-//        return project;
-//    }
-//
-//
-//    public void setProject(Set<Project> project) {
-//        this.project = project;
-//    }
+    public Set<ProjectDTO> getProject() {
+        return project;
+    }
+
+
+    public void setProject(Set<ProjectDTO> project) {
+        this.project = project;
+    }
 }

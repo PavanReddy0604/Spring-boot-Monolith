@@ -39,4 +39,12 @@ public class GlobalExceptionHandler {
         errorMap.put("Error Message",baseExcepiton.getMessage());
         return errorMap;
     }
+
+    @ExceptionHandler(ProjectNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String,String> projectNotFoundException(ProjectNotFoundException projectNotFoundException){
+        Map<String,String> errorMap=new HashMap<>();
+        errorMap.put("Error Message",projectNotFoundException.getMessage());
+        return errorMap;
+    }
 }

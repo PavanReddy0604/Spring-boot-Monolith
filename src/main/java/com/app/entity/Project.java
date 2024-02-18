@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
+@Table(uniqueConstraints =@UniqueConstraint(columnNames = {"projectName","projectType"}) )
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
