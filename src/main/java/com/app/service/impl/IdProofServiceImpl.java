@@ -3,8 +3,10 @@ package com.app.service.impl;
 import com.app.dao.IdProofRepository;
 import com.app.dto.IdProofDTO;
 import com.app.dto.PersonDTO;
+import com.app.dto.ProjectDTO;
 import com.app.entity.IdProof;
 import com.app.entity.Person;
+import com.app.entity.Project;
 import com.app.exception.BaseExcepiton;
 import com.app.exception.IdProofNotFoundException;
 import com.app.exception.PersonNotFoundException;
@@ -73,7 +75,7 @@ public class IdProofServiceImpl implements IdProofService {
                     personDTO.setPersonName(idProof.getPerson().getPersonName());
                     personDTO.setGender(idProof.getPerson().getGender());
                     personDTO.setMobileNumber(idProof.getPerson().getMobileNumber());
-                    personDTO.setProject(idProof.getPerson().getProject());
+                    personDTO.setProject(mapToDTO(idProof.getPerson().getProject()));
                     idProofDTO.setPerson(personDTO);
                     idProofDTOList.add(idProofDTO);
                     idProofDTOList.add(idProofDTO);
@@ -87,6 +89,30 @@ public class IdProofServiceImpl implements IdProofService {
             throw new BaseExcepiton("Unable to get IdProof with name " + proofName);
         }
         return idProofDTOList;
+    }
+
+    private Set<ProjectDTO> mapToDTO(Set<Project> projects){
+        Set<ProjectDTO> projectDTOS=new HashSet<>();
+        for(Project project:projects){
+            ProjectDTO projectDTO=new ProjectDTO();
+            projectDTO.setProjectName(project.getProjectName());
+            projectDTO.setProjectDescription(project.getProjectDescription());
+            projectDTO.setProjectType(project.getProjectType());
+            projectDTOS.add(projectDTO);
+        }
+        return projectDTOS;
+    }
+
+    private Set<Project> mapToEntity(Set<ProjectDTO> projectDTOs){
+        Set<Project> projects=new HashSet<>();
+        for(ProjectDTO dto:projectDTOs){
+            Project project=new Project();
+            project.setProjectName(dto.getProjectName());
+            project.setProjectDescription(dto.getProjectDescription());
+            project.setProjectType(dto.getProjectType());
+            projects.add(project);
+        }
+        return projects;
     }
 
     @Override
@@ -108,7 +134,7 @@ public class IdProofServiceImpl implements IdProofService {
                 personDTO.setPersonName(idProof.getPerson().getPersonName());
                 personDTO.setGender(idProof.getPerson().getGender());
                 personDTO.setMobileNumber(idProof.getPerson().getMobileNumber());
-                personDTO.setProject(idProof.getPerson().getProject());
+                personDTO.setProject(mapToDTO(idProof.getPerson().getProject()));
                 idProofDTO.setPerson(personDTO);
                 idProofDTOS.add(idProofDTO);
             }
@@ -138,7 +164,7 @@ public class IdProofServiceImpl implements IdProofService {
                     person.setMobileNumber(idProofDTO.getPerson().getMobileNumber());
                     person.setProof(idProof);
                     person.setPersonId(idProofDTO.getProofId());
-                    person.setProject(idProofDTO.getPerson().getProject());
+                    person.setProject(mapToEntity(idProofDTO.getPerson().getProject()));
                     idProof.setPerson(person);
                     updatedIdProofDTOId = idProofRepository.save(idProof).getId();
                 } else {

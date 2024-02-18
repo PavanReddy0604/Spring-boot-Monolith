@@ -2,16 +2,21 @@ package com.app.service.impl;
 
 import com.app.dao.PersonRepository;
 import com.app.dao.ProjectRepository;
+import com.app.dto.PersonDTO;
 import com.app.dto.ProjectDTO;
 import com.app.entity.Person;
 import com.app.entity.Project;
 import com.app.exception.BaseExcepiton;
 import com.app.exception.PersonNotFoundException;
+import com.app.exception.ProjectNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProjectServiceImpl {
@@ -57,6 +62,80 @@ public class ProjectServiceImpl {
         }
         return project.getId();
     }
+
+    public List<ProjectDTO> getAllProjects() throws BaseExcepiton {
+        try {
+            List<Project> projects=projectRepository.findAll();
+            List<ProjectDTO> projectDTOS=new ArrayList<>();
+            for(Project project:projects){
+                ProjectDTO projectDTO=new ProjectDTO();
+                projectDTO.setProjectName(project.getProjectName());
+                projectDTO.setProjectDescription(project.getProjectDescription());
+                projectDTO.setProjectType(project.getProjectType());
+                PersonDTO personDTO=new PersonDTO();
+                personDTO.setPersonId(project.getPerson().getPersonId());
+                personDTO.setGender(project.getPerson().getGender());
+                personDTO.setPersonName(project.getPerson().getPersonName());
+                personDTO.setMobileNumber(project.getPerson().getMobileNumber());
+                projectDTO.setPerson(personDTO);
+                projectDTOS.add(projectDTO);
+            }
+            return projectDTOS;
+        }
+        catch (Exception exception){
+            log.error("Exception Occurred while fetching all projects ");
+            throw new BaseExcepiton("Unable to fetch projects");
+        }
+    }
+
+
+    public List<ProjectDTO> getProjectByPersonNameAndMobileNum(String personName,long mobileNumber) throws BaseExcepiton {
+        try {
+            List<Project> projects = projectRepository.findProjectByPersonNameAndMobileNumber(personName, mobileNumber);
+            if (projects.isEmpty()) {
+                List<ProjectDTO> projectDTOS = new ArrayList<>();
+                for (Project project : projects) {
+                    ProjectDTO projectDTO = new ProjectDTO();
+                    projectDTO.setProjectType(project.getProjectType());
+                    projectDTO.setProjectDescription(project.getProjectDescription());
+                    projectDTO.setProjectName(project.getProjectName());
+                    projectDTOS.add(projectDTO);
+                }
+                return projectDTOS;
+            }
+            else{
+                log.warn(personName+" haven't made any project.");
+                throw new BaseExcepiton("No projects found");
+            }
+        }
+
+        catch (Exception e){
+            throw new BaseExcepiton(personName+" haven't made any project.");
+        }
+
+    }
+
+    public int updateProject(int id,ProjectDTO projectDTO) throws ProjectNotFoundException {
+        try {
+            Optional<Project> optionalProject=projectRepository.findById(id);
+            if(optionalProject.isPresent()){
+              Project project=optionalProject.get();
+              project.setProjectDescription(projectDTO.getProjectDescription());
+              project.setProjectType(projectDTO.getProjectType());
+              project.setProjectName(projectDTO.getProjectName());
+              return projectRepository.save(project).getId();
+            }
+            else {
+                log.warn("No project found with id "+id);
+                throw new ProjectNotFoundException("No project found with id "+id);
+            }
+        }
+        catch (ProjectNotFoundException projectNotFoundException){
+            throw projectNotFoundException;
+        }
+    }
+
+
 
 
 }
