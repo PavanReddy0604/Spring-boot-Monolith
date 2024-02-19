@@ -18,31 +18,41 @@ import java.util.UUID;
 @RequestMapping("/project")
 public class ProjectController {
 
-    private static Logger logger= LoggerFactory.getLogger(ProjectController.class);
+    private static Logger logger = LoggerFactory.getLogger(ProjectController.class);
     private ProjectServiceImpl projectService;
-    public ProjectController(ProjectServiceImpl projectService){
-        this.projectService=projectService;
+
+    public ProjectController(ProjectServiceImpl projectService) {
+        this.projectService = projectService;
     }
 
 
     @PostMapping("/")
-    public ResponseEntity<Integer> saveProject(@RequestBody()  ProjectDTO projectDTO) throws PersonNotFoundException, BaseExcepiton {
-     logger.info("Request received to save project {} ",projectDTO.getProjectName());
-        return new ResponseEntity<>(projectService.saveProject(projectDTO),HttpStatus.CREATED);
+    public ResponseEntity<Integer> saveProject(@RequestBody() ProjectDTO projectDTO,@RequestParam(name = "personName") String personName, @RequestParam(name = "mobileNumber") long mobileNumber) throws PersonNotFoundException, BaseExcepiton {
+        logger.info("Request received to save project {} ", projectDTO.getProjectName());
+        return new ResponseEntity<>(projectService.saveProject(projectDTO,personName,mobileNumber), HttpStatus.CREATED);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<ProjectDTO>> getAllProjects() throws BaseExcepiton {
         logger.info("Request received to get all projects ");
-        return new ResponseEntity<>(projectService.getAllProjects(),HttpStatus.OK);
+        return new ResponseEntity<>(projectService.getAllProjects(), HttpStatus.OK);
     }
+
     @GetMapping("/person")
-    public ResponseEntity<List<ProjectDTO>> getProjectByPersonNameAndMobileNumber(@RequestParam(name = "personName") String personName,@RequestParam(name = "mobileNumber") long mobileNumber) throws BaseExcepiton {
-        return new ResponseEntity<>(projectService.getProjectByPersonNameAndMobileNum(personName,mobileNumber),HttpStatus.OK);
+    public ResponseEntity<List<ProjectDTO>> getProjectByPersonNameAndMobileNumber(@RequestParam(name = "personName") String personName, @RequestParam(name = "mobileNumber") long mobileNumber) throws BaseExcepiton {
+        return new ResponseEntity<>(projectService.getProjectByPersonNameAndMobileNum(personName, mobileNumber), HttpStatus.OK);
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Integer> updateProjectByPerson(@PathVariable("id") int projectId,@RequestBody ProjectDTO projectDto) throws ProjectNotFoundException {
-        return new ResponseEntity<>(projectService.updateProject(projectId, projectDto),HttpStatus.CREATED);
+    public ResponseEntity<Integer> updateProjectByPerson(@PathVariable("id") int projectId, @RequestBody ProjectDTO projectDto) throws ProjectNotFoundException {
+        return new ResponseEntity<>(projectService.updateProject(projectId, projectDto), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/")
+    public ResponseEntity<Void> deleteByPersonNameAndMobileNumber(@RequestParam(name = "personName") String personName, @RequestParam(name = "mobileNumber") long mobileNumber) throws BaseExcepiton {
+        logger.info("Request received to delete all projects of person {} ", personName);
+        projectService.deleteProjectByPersonNameAndMobileNumber(personName, mobileNumber);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

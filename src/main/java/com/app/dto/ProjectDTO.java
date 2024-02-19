@@ -22,6 +22,7 @@ public class ProjectDTO {
 
     private ProjectType projectType;
 
+    @JsonIgnore
     private PersonDTO person;
 
     public String getProjectDescription() {
