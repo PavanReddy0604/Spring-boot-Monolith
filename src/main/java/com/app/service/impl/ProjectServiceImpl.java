@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class ProjectServiceImpl {
@@ -31,20 +30,19 @@ public class ProjectServiceImpl {
         this.personRepository=personRepository;
     }
 
-    public int saveProject(ProjectDTO projectDTO) throws PersonNotFoundException, BaseExcepiton {
+    public int saveProject(ProjectDTO projectDTO,String personName,long mobileNumber) throws PersonNotFoundException, BaseExcepiton {
         Project project = new Project();
         try {
             log.info("Checking if the person is available to make project {} ",projectDTO.getProjectName());
-            Optional<Person> optionalPerson=personRepository.findByPersonNameAndMobileNumber(projectDTO.getPerson().getPersonName(),projectDTO.getPerson().getMobileNumber());
+            Optional<Person> optionalPerson=personRepository.findByPersonNameAndMobileNumber(personName,mobileNumber);
             if(optionalPerson.isPresent()){
                 log.info("Person is available to make project");
-
                 project.setProjectName(projectDTO.getProjectName());
                 project.setProjectType(projectDTO.getProjectType());
                 project.setProjectDescription(projectDTO.getProjectDescription());
-                project.setPerson(optionalPerson.get());
-                log.info("Saving the project {} made by the person {} ",projectDTO.getProjectName(),projectDTO.getPerson().getPersonName());
+                log.info("Saving the project {} made by the person {} ",projectDTO.getProjectName(),personName);
                 project.setProjectDescription(project.getProjectDescription());
+                project.setPerson(optionalPerson.get());
                 project=projectRepository.save(project);
                 }
             else {
@@ -92,7 +90,7 @@ public class ProjectServiceImpl {
     public List<ProjectDTO> getProjectByPersonNameAndMobileNum(String personName,long mobileNumber) throws BaseExcepiton {
         try {
             List<Project> projects = projectRepository.findProjectByPersonNameAndMobileNumber(personName, mobileNumber);
-            if (projects.isEmpty()) {
+            if (!projects.isEmpty()) {
                 List<ProjectDTO> projectDTOS = new ArrayList<>();
                 for (Project project : projects) {
                     ProjectDTO projectDTO = new ProjectDTO();
@@ -135,7 +133,22 @@ public class ProjectServiceImpl {
         }
     }
 
-
-
-
+    public void deleteProjectByPersonNameAndMobileNumber(String personName,long mobileNumber) throws BaseExcepiton {
+        try {
+            List<Project> projects = projectRepository.findProjectByPersonNameAndMobileNumber(personName, mobileNumber);
+            log.info("Deleting {} projects made by the person {} ",projects.size(),personName);
+            if (!projects.isEmpty()) {
+                for(Project project:projects) {
+                    projectRepository.delete(project);
+                }
+            }
+            else{
+                log.warn(personName+" haven't made any project.");
+                throw new BaseExcepiton("No projects found for deleting");
+            }
+        }
+           catch (BaseExcepiton e) {
+            throw e;
+        }
+    }
 }
