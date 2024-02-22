@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
         return errorMap;
     }
     @ExceptionHandler(IdProofNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String,String> idProofNotFoundException(IdProofNotFoundException idProofNotFoundException){
         Map<String,String> errorMap=new HashMap<>();
         errorMap.put("Error Message",idProofNotFoundException.getMessage());
@@ -26,14 +26,14 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(PersonNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String,String> personNotFoundException(PersonNotFoundException personNotFoundException){
         Map<String,String> errorMap=new HashMap<>();
         errorMap.put("Error Message",personNotFoundException.getMessage());
         return errorMap;
     }
     @ExceptionHandler(BaseExcepiton.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Map<String,String> personNotFoundException(BaseExcepiton baseExcepiton){
         Map<String,String> errorMap=new HashMap<>();
         errorMap.put("Error Message",baseExcepiton.getMessage());

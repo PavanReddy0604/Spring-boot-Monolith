@@ -1,7 +1,6 @@
 package com.app.entity;
 
 import jakarta.persistence.*;
-import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

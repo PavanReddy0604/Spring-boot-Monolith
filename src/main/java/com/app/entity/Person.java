@@ -24,7 +24,7 @@ public class Person extends Audit implements Serializable {
     @JoinColumn(name = "id_proof")
     @JsonBackReference
     private IdProof proof;
-    @OneToMany(mappedBy = "person",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "person",orphanRemoval = true)
     private Set<Project> project;
 
     public Person(){

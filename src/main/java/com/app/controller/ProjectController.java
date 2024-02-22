@@ -40,11 +40,13 @@ public class ProjectController {
 
     @GetMapping("/person")
     public ResponseEntity<List<ProjectDTO>> getProjectByPersonNameAndMobileNumber(@RequestParam(name = "personName") String personName, @RequestParam(name = "mobileNumber") long mobileNumber) throws BaseExcepiton {
+        logger.info("Request received to get Project made by the person {} ",personName);
         return new ResponseEntity<>(projectService.getProjectByPersonNameAndMobileNum(personName, mobileNumber), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Integer> updateProjectByPerson(@PathVariable("id") int projectId, @RequestBody ProjectDTO projectDto) throws ProjectNotFoundException {
+        logger.info("Request received to update the project");
         return new ResponseEntity<>(projectService.updateProject(projectId, projectDto), HttpStatus.CREATED);
     }
 

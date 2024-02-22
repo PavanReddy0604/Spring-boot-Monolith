@@ -1,7 +1,5 @@
 package com.app.dto;
 
-import com.app.entity.Person;
-
 import java.util.UUID;
 
 public class IdProofDTO {
