@@ -1,7 +1,5 @@
 package com.app.dto;
 
-import com.app.entity.IdProof;
-import com.app.entity.Project;
 import com.app.util.Gender;
 
 import java.util.Set;

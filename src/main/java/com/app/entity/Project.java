@@ -1,7 +1,6 @@
 package com.app.entity;
 
 import com.app.util.ProjectType;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity

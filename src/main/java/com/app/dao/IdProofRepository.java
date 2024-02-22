@@ -15,5 +15,5 @@ public interface IdProofRepository extends JpaRepository<IdProof,Integer> {
 
     List<IdProof> findByProofName(String name);
     Optional<IdProof> findByProofId(UUID uuid);
-    int deleteByProofId(UUID uuid);
+    void deleteByProofId(UUID uuid);
 }

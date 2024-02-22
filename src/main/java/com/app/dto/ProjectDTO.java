@@ -1,11 +1,7 @@
 package com.app.dto;
 
-import com.app.entity.Person;
 import com.app.util.ProjectType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.util.UUID;
 
 public class ProjectDTO {
 
