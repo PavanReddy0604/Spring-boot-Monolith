@@ -108,17 +108,17 @@ public class IdProofServiceImpl implements IdProofService {
         return projectDTOS;
     }
 
-    private Set<Project> mapToEntity(Set<ProjectDTO> projectDTOs){
-        Set<Project> projects=new HashSet<>();
-        for(ProjectDTO dto:projectDTOs){
-            Project project=new Project();
-            project.setProjectName(dto.getProjectName());
-            project.setProjectDescription(dto.getProjectDescription());
-            project.setProjectType(dto.getProjectType());
-            projects.add(project);
-        }
-        return projects;
-    }
+//    private Set<Project> mapToEntity(Set<ProjectDTO> projectDTOs){
+//        Set<Project> projects=new HashSet<>();
+//        for(ProjectDTO dto:projectDTOs){
+//            Project project=new Project();
+//            project.setProjectName(dto.getProjectName());
+//            project.setProjectDescription(dto.getProjectDescription());
+//            project.setProjectType(dto.getProjectType());
+//            projects.add(project);
+//        }
+//        return projects;
+//    }
 
     @Override
     public Set<IdProofDTO> getAllIdProofs() throws BaseExcepiton {
@@ -164,7 +164,7 @@ public class IdProofServiceImpl implements IdProofService {
                     person.setPersonName(idProofDTO.getPerson().getPersonName());
                     person.setMobileNumber(idProofDTO.getPerson().getMobileNumber());
                     person.setProof (idProof);
-                    person.setProject(mapToEntity(idProofDTO.getPerson().getProject()));
+                  //  person.setProject(mapToEntity(idProofDTO.getPerson().getProject()));
                     idProof.setPerson(person);
                     log.info("Before saving");
                     updatedIdProofDTOId = idProofRepository.save(idProof).getId();
