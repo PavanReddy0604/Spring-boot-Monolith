@@ -1,6 +1,13 @@
 ## <p align="center">Spring Boot Application</p>
 
 ****
+### Tech stack and tools used
+
+* Java
+* Spring boot
+* Postgres
+* Rest API
+* Maven
 
 ### Overview
 
@@ -38,13 +45,13 @@ To run this Spring Boot application locally, follow these steps:
 
 #### <ins>Project</ins>
 
-- [Save Project]()
-- [Get all Projects]()
-- [Get all Projects By Person]()
-- [Update Project]()
-- [Delete Project]()
+- [Save Project](#save-project)
+- [Get all Projects](#get-all-projects)
+- [Get all Projects By Person](#get-all-projects-by-person)
+- [Update Project](#insupdate-projectins)
+- [Delete Project](#insdelete-all-projects-of-a-personins)
 
-##### Save IdProof
+##### <ins>Save IdProof</ins>
 
 > Method :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; POST  
 > EndPoint :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /idProof/  
@@ -69,7 +76,7 @@ To run this Spring Boot application locally, follow these steps:
 Id of the saved IdProof
 ```
 
-##### Get all IdProofs
+##### <ins>Get all IdProofs</ins>
 
 > Method :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GET  
 > EndPoint :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /idProof/
@@ -96,7 +103,7 @@ Id of the saved IdProof
 ]
 ```
 
-##### Get IdProof by PoofName
+##### <ins>Get IdProof by PoofName</ins>
 
 > Method :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GET  
 > EndPoint :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /idProof/proofName/{proofName}
@@ -123,13 +130,14 @@ Id of the saved IdProof
 ]
 ```
 
-##### Update IdProof
+##### <ins>Update IdProof</ins>
 
 > Method&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PUT  
 > EndPoint&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 > /idProof/  
-> Content-Type&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;application/json
+> Content-Type&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;application/json>  
+
 **Request Body**
 
 ```json
@@ -151,7 +159,7 @@ Id of the saved IdProof
 Id of the updated IdProof
 ```
 
-##### Delete IdProof
+##### <ins>Delete IdProof</ins>
 
 > Method :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DELETE  
 > EndPoint :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /idProof/{proofId}
@@ -166,13 +174,93 @@ Id of the updated IdProof
 Id of the deleted IdProof
 ```
 
-### Tech stack and tools used
+##### <ins>Save Project</ins>
+> Method :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; POST  
+> EndPoint :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /project/  
+> Content-Type: application/json  
+> Request Params : personName,mobileNumber
 
-* Java
-* Spring boot
-* Postgres
-* Rest API
-* Maven
+**Request Body**
+
+```json
+{
+  "projectName": "Springboot Monolithic application",
+  "projectDescription": "This project helps to understand how a monolithic Springboot application can be built where an Entity has relation with other Entities",
+  "projectType": "MINOR"
+}
+```
+
+**Response**
+
+```diff
+Id of the saved Project
+```
+##### <ins>Get all Projects</ins>
+> Method :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GET  
+> EndPoint :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /project/  
+
+**Request Body**
+> No Request Body is required
+
+**Response Body**
+```json
+[
+    {
+        "projectName": "Springboot Monolithic application",
+        "projectDescription": "This project helps to understand how a monolithic Springboot application can be built where an Entity has relation with other Entities",
+        "projectType": "MINOR"
+    }
+]
+```
+
+##### <ins>Get all Projects by Person</ins>
+> Method :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GET  
+> EndPoint :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /project  
+> Request Params : personName,mobileNumber
+
+**Request Body**
+> No Request Body is required
+
+**Response Body**
+```json
+[
+    {
+        "projectName": "Springboot Monolithic application",
+        "projectDescription": "This project helps to understand how a monolithic Springboot application can be built where an Entity has relation with other Entities",
+        "projectType": "MINOR"
+    }
+]
+```
+
+##### <ins>Update Project</ins>
+> Method :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PUT  
+> EndPoint :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /project/{projectId}
+
+**Request Body**
+- The project details you want to update (Here I have changed projectType to MAJOR)
+```json
+{
+    "projectName": "Springboot Monolithic application",
+    "projectDescription": "This project helps to understand how a monolithic Springboot application can be built where an Entity has relation with other Entities",
+    "projectType": "MAJOR"
+}
+```
+**Response Body**
+> Id of the updated Project
+
+##### <ins>Delete all Projects of a Person</ins>
+> Method :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DELETE  
+> EndPoint :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /project  
+> Request Params : personName,mobileNumber
+
+**Request Body**
+> No request body is required
+
+**Response Body**
+> No response body
+
+
+
 
 
 
