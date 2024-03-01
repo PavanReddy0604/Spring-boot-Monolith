@@ -27,7 +27,7 @@ To run this Spring Boot application locally, follow these steps:
 ### Idea based on which this project is developed
 
 - IdProof and Person Entities have One To One mapping between them that means, We can't have multiple IdProofs for a
-  single person and vice versa
+  single person and the person can not have more than one same IdProof.
 - Person and Project Entities have One To Many Mapping between them that means, One person can make multiple projects.
 
 ### APIs
