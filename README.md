@@ -38,7 +38,7 @@ To run this Spring Boot application locally, follow these steps:
 #### <ins>IdProof</ins>
 
 - [Save IdProof](#inssave-idproofins)
-- [Get all IdProofs](#insget-all-idproofsins)
+- [Get all IdProofs](#get-all-idproofs)
 - [Get IdProof By ProofName](#get-idproof-by-poofname)
 - [Update IdProof](#insupdate-idproofins)
 - [Delete IdProof](#insdelete-idproofins)
